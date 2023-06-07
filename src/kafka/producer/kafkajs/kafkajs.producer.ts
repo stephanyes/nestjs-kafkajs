@@ -10,9 +10,9 @@ export class KafkajsProducer implements IProducer {
     private sleepTime: number;
 
     constructor( private readonly topic: string, broker: string, sleepTime: number = 5000) {
-        const b = broker.split(",").map(b => b.trim())
+        const brokers = broker.split(",").map(b => b.trim())
         this.kafka = new Kafka({
-            brokers: [...b],
+            brokers: [...brokers],
             logLevel: logLevel.INFO
         })
 
