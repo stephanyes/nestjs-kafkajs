@@ -18,8 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "kafka:up": "docker compose up -d",
-    "kafka:rm": "docker compose rm -s -f -v"
+    "kafka:up": "docker compose up -d --remove-orphans",
+    "kafka:rm": "docker compose rm -s -f -v",
+    "docker:restart": "npm run kafka:rm && npm run kafka:up"
   },
   "dependencies": {
     "@kafkajs/confluent-schema-registry": "^3.3.0",
