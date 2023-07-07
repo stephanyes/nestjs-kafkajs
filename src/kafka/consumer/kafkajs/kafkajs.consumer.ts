@@ -3,6 +3,7 @@ import { Consumer, ConsumerConfig, ConsumerSubscribeTopics, Kafka, KafkaMessage,
 import { sleep } from "src/utils/sleep";
 import { IConsumer } from "./consumer.interface";
 import * as retry from 'async-retry';
+import { KafkaException } from "src/kafka/exceptions";
 
 export class KafkajsConsumer implements IConsumer {
     private readonly client: Kafka;
@@ -22,7 +23,7 @@ export class KafkajsConsumer implements IConsumer {
         // this.kafka = new Kafka({ brokers: [broker], logLevel: logLevel.INFO });
         console.log("CONSUMER CONFIG ", consumerConfig)
         this.client = client;
-        console.log("KAFKA ", this.client)
+        // console.log(this.client)
         this.consumer = this.client.consumer(consumerConfig);
         this.logger = new Logger(`${topic.topics}-${consumerConfig.groupId}`);
         this.maxRetries = maxRetries;
@@ -61,6 +62,7 @@ export class KafkajsConsumer implements IConsumer {
                     }
                     this.logger.error(`Error consuming message`, error)
                     this.logger.error(`Message lost: ${message.value.toString()}`)
+                    throw new KafkaException('Error processing Kafka message');
                     
                     // Do something with the message that we are not consuming?\
                     // add it to a dead letter queue?

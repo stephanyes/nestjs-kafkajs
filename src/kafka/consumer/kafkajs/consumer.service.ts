@@ -4,6 +4,7 @@ import { IConsumer } from './consumer.interface';
 import { IKafkajsConsumerOptions } from './kafkajs-consumer-options-interface';
 import { KafkajsConsumer } from './kafkajs.consumer';
 import { KAFKA_CLIENT } from 'src/kafka/constants';
+import { KafkaException } from 'src/kafka/exceptions';
 
 @Injectable()
 export class ConsumerService implements OnApplicationShutdown {
@@ -17,7 +18,7 @@ export class ConsumerService implements OnApplicationShutdown {
   async consume({ topic, config, onMessage }: IKafkajsConsumerOptions) {
     try {
         // console.log("KAFKA IN CONSUMERSERVICE ", this.kafka)
-        console.log("QUE kafka LLEGA ", this.kafka)
+        // console.log("QUE kafka LLEGA ", this.kafka)
       const consumer = new KafkajsConsumer(
         topic,
         config,
@@ -30,6 +31,7 @@ export class ConsumerService implements OnApplicationShutdown {
     } catch (error) {
       // handle error here, for example log it
       console.error(`Error consuming messages from topic ${topic.topics}:`, error);
+      throw new KafkaException('Error processing Kafka message');
     }
   }
 

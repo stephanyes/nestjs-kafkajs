@@ -11,12 +11,13 @@ import { KAFKA_CLIENT } from './constants';
 })
 export class KafkaModule {
   static forRoot(options: KafkaModuleOptions): DynamicModule {
+    const kafka = new Kafka(options);
     return {
       module: KafkaModule,
       providers: [
         {
           provide: KAFKA_CLIENT,
-          useValue: options
+          useValue: kafka
         },
         ProducerService, 
         ConsumerService

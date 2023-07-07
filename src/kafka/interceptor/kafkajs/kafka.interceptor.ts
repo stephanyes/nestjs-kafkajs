@@ -32,7 +32,7 @@ import {
                 console.log('Received message', JSON.stringify({ message: message.value.toString() }));
             }
           })
-          .catch((error) => console.error(error));
+          .catch((error) => console.error("CACACACAC"));
       }
       return next.handle();
     }

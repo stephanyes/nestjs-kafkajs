@@ -9,6 +9,8 @@ export class KafkajsProducer implements IProducer {
     private readonly logger: Logger;
     private sleepTime: number;
 
+    // TODO cambiar la linea 15 no generar una nueva instancia de kafka
+    // hacer como en el consumer e importarlo desde el modulo
     constructor( private readonly topic: string, broker: string, sleepTime: number = 5000) {
         const brokers = broker.split(",").map(b => b.trim())
         this.kafka = new Kafka({
